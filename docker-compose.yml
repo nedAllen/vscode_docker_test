@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+    container_name: my-python
+    volumes:
+      - my-python-volume:/app
+    networks:
+      - my-dev-network
+    ports:
+      - "58888:8888"   # 호스트의 58888 포트를 컨테이너의 8888 포트로 매핑
+      - "51001:51001"  # 호스트의 51001 포트를 컨테이너의 51001 포트로 매핑
+    restart: unless-stopped  # 종료 시 재시작하지 않음. 그 외에는 항상 재시작
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile_mysql
+    container_name: my-mysql
+    volumes:
+      - my-mysql-volume:/app
+      - my-mysql-data:/var/lib/mysql
+    networks:
+      - my-dev-network
+    ports:
+      - "23306:3306"   # 호스트의 23306 포트를 컨테이너의 3306 포트로 매핑
+    restart: unless-stopped  # 종료 시 재시작하지 않음. 그 외에는 항상 재시작
+
+networks:
+  my-dev-network: {}    # my-python, my-mysql 컨테이너를 동일한 도커네트워크로 설정
+volumes:
+  my-python-volume: {}  # 호스트의 my-python-volume 도커볼륨을 마운팅에 사용
+  my-mysql-data: {}     # 호스트의 my-mysql-data 도커볼륨을 마운팅에 사용
+  my-mysql-volume: {}   # 호스트의 my-mysql-volume 도커볼륨을 마운팅에 사용
