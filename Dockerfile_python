@@ -1,0 +1,21 @@
+#Dockerfile_python
+#docker build -t my-python-image:latest .
+
+# 설치할 Python 버전 (dockerhub 참조)
+FROM python:3.9.6
+
+# Set the working directory in the container 
+WORKDIR /app
+
+# 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
+COPY . /app
+
+# 도커 내부에 Library들을 설치
+RUN apt-get update
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+#RUN cat requirements.txt | xargs -n 1 python -m pip install
+
+# Make port 51001 available to the world outside this container 
+EXPOSE 8888 51001
