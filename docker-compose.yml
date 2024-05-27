@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_python
+    image: my-python-image:1.0
     container_name: my-python
     volumes:
       - my-python-volume:/app
@@ -12,13 +13,13 @@ services:
       - my-dev-network
     ports:
       - "58888:8888"   # 호스트의 58888 포트를 컨테이너의 8888 포트로 매핑
-      - "51001:51001"  # 호스트의 51001 포트를 컨테이너의 51001 포트로 매핑
     restart: unless-stopped  # 종료 시 재시작하지 않음. 그 외에는 항상 재시작
 
   mysql:
     build:
       context: .
       dockerfile: Dockerfile_mysql
+    image: my-mysql-image:1.0
     container_name: my-mysql
     volumes:
       - my-mysql-volume:/app
