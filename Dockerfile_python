@@ -9,6 +9,7 @@ WORKDIR /app
 
 # 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
 COPY . /app
+COPY .bashrc /root
 
 # 도커 내부에 Library들을 설치
 RUN apt-get update
