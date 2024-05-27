@@ -1,13 +1,14 @@
 #Dockerfile_mysql
 #docker build -t my-mysql-image:latest .
 
-FROM mysql:latest
+FROM mysql:8.4
 
 # Set the working directory in the container 
 WORKDIR /app
 
-# 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
+# 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
 COPY . /app
+COPY .bashrc /root
 
 # MySQL 설정
 ENV MYSQL_ROOT_PASSWORD=myroot
