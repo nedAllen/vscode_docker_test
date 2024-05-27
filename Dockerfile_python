@@ -7,16 +7,16 @@ FROM python:3.9.6
 # Set the working directory in the container 
 WORKDIR /app
 
-# 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
+# 현재 경로(.)의 파일들(requirements, bash_profile 등)을 도커 내부에 복사
 COPY . /app
 COPY .bashrc /root
 
 # 도커 내부에 Library들을 설치
-RUN apt-get update
+RUN apt-get update && apt-get install -y vim
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-#RUN cat requirements.txt | xargs -n 1 python -m pip install
+# 8888 포트를 열어두기 (혹시 모를 Jupyter)
+EXPOSE 8888
 
-# Make port 51001 available to the world outside this container 
-EXPOSE 8888 51001
+CMD tail -f /dev/null
